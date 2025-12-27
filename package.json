@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@supabase/supabase-js": "^2.89.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -18,15 +17,6 @@
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.10.1",
     "recharts": "^3.6.0"
-=======
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "lucide-react": "^0.561.0",
-    "react-router-dom": "^7.10.1",
-    "clsx": "^2.1.1",
-    "recharts": "^3.6.0",
-    "date-fns": "^4.1.0"
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

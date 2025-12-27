@@ -2,10 +2,7 @@ import { format, parseISO } from 'date-fns';
 import { nl, enUS } from 'date-fns/locale';
 import { Workout, WorkoutSnack, User, WorkoutTemplate } from './types';
 import { DEFAULT_TEMPLATES } from './constants';
-<<<<<<< HEAD
 import { supabase } from './supabase';
-=======
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
 
 const STORAGE_KEYS = {
   WORKOUTS: 'geokracht_workouts',
@@ -14,7 +11,6 @@ const STORAGE_KEYS = {
   USER: 'geokracht_user'
 };
 
-<<<<<<< HEAD
 // --- Storage Helpers (Supabase) ---
 
 export const getStoredWorkouts = async (): Promise<Workout[]> => {
@@ -201,59 +197,6 @@ export const updateProfile = async (profile: Partial<User>) => {
     language: profile.language,
     updated_at: new Date().toISOString()
   });
-=======
-// --- Storage Helpers ---
-
-export const getStoredWorkouts = (): Workout[] => {
-  const data = localStorage.getItem(STORAGE_KEYS.WORKOUTS);
-  return data ? JSON.parse(data) : [];
-};
-
-export const saveWorkout = (workout: Workout) => {
-  const workouts = getStoredWorkouts();
-  const existingIndex = workouts.findIndex(w => w.id === workout.id);
-  if (existingIndex >= 0) {
-    workouts[existingIndex] = workout;
-  } else {
-    workouts.unshift(workout); // Add to beginning
-  }
-  localStorage.setItem(STORAGE_KEYS.WORKOUTS, JSON.stringify(workouts));
-};
-
-export const deleteStoredWorkout = (id: string) => {
-  const workouts = getStoredWorkouts();
-  const newWorkouts = workouts.filter(w => w.id !== id);
-  localStorage.setItem(STORAGE_KEYS.WORKOUTS, JSON.stringify(newWorkouts));
-};
-
-export const getStoredSnacks = (): WorkoutSnack[] => {
-  const data = localStorage.getItem(STORAGE_KEYS.SNACKS);
-  return data ? JSON.parse(data) : [];
-};
-
-export const saveSnack = (snack: WorkoutSnack) => {
-  const snacks = getStoredSnacks();
-  snacks.unshift(snack);
-  localStorage.setItem(STORAGE_KEYS.SNACKS, JSON.stringify(snacks));
-};
-
-export const getTemplates = (): WorkoutTemplate[] => {
-  const data = localStorage.getItem(STORAGE_KEYS.TEMPLATES);
-  return data ? JSON.parse(data) : DEFAULT_TEMPLATES;
-};
-
-export const saveTemplates = (templates: WorkoutTemplate[]) => {
-  localStorage.setItem(STORAGE_KEYS.TEMPLATES, JSON.stringify(templates));
-};
-
-export const getUser = (): User => {
-  const data = localStorage.getItem(STORAGE_KEYS.USER);
-  return data ? JSON.parse(data) : { id: 'u1', name: 'Athlete', language: 'nl' };
-};
-
-export const saveUser = (user: User) => {
-  localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
 };
 
 // --- Logic Helpers ---

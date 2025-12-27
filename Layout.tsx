@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-<<<<<<< HEAD
 import { Home, Dumbbell, Settings, BarChart2, History, Activity, Globe, LogOut } from 'lucide-react';
 import { clsx } from 'clsx';
 import { getProfile, updateProfile } from './utils';
@@ -37,23 +36,6 @@ const Layout = ({ session }: { session: Session }) => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-=======
-import { Home, Dumbbell, Settings, BarChart2, History, Activity, Globe } from 'lucide-react';
-import { clsx } from 'clsx';
-import { getUser, saveUser } from './utils';
-import { TRANSLATIONS } from './constants';
-
-const Layout = () => {
-  const location = useLocation();
-  const [user, setUser] = React.useState(getUser());
-  const t = TRANSLATIONS[user.language];
-
-  const toggleLanguage = () => {
-    const newUser = { ...user, language: user.language === 'nl' ? 'en' : 'nl' as 'nl'|'en' };
-    setUser(newUser);
-    saveUser(newUser);
-    window.location.reload(); // Simple reload to refresh all components
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
   };
 
   const NavItem = ({ to, icon: Icon, label }: { to: string, icon: any, label: string }) => {
@@ -84,7 +66,6 @@ const Layout = () => {
             <p className="text-xs font-bold uppercase">5 Exercise System</p>
           </div>
         </div>
-<<<<<<< HEAD
         <div className="flex items-center gap-2">
           <button onClick={toggleLanguage} className="bg-white border-4 border-black px-2 py-1 font-bold text-xs flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-1">
             <Globe size={14} /> {language.toUpperCase()}
@@ -93,20 +74,11 @@ const Layout = () => {
             <LogOut size={16} />
           </button>
         </div>
-=======
-        <button onClick={toggleLanguage} className="bg-white border-4 border-black px-3 py-1 font-bold text-xs flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-1">
-          <Globe size={14} /> {user.language.toUpperCase()}
-        </button>
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
       </header>
 
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-4 pb-24 no-scrollbar">
-<<<<<<< HEAD
         <Outlet context={{ session }} />
-=======
-        <Outlet />
->>>>>>> 65ed1db70b5b9c2be34b4c015e1ae6575c4e948b
       </main>
 
       {/* Bottom Navigation */}
