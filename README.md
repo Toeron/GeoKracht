@@ -2,7 +2,6 @@
 
 GeoKracht is a high-performance, minimalist workout tracker built with a "Neobrutalist" design philosophy. It focuses on the 5 core compound lifts (Workout A/B structure) and gamifies your progress.
 
-![Banner](https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6)
 
 ## ⚡ Features
 
