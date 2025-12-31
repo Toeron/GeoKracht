@@ -3,6 +3,7 @@ import { getStoredWorkouts, deleteStoredWorkout, formatDate, calculateVolume } f
 import { BCard } from '../components/ui/BrutalistComponents';
 import { Clock, Calendar, Trash2, ChevronDown, ChevronUp, Dumbbell } from 'lucide-react';
 import { Workout } from '../types';
+import WorkoutCalendar from '../components/WorkoutCalendar';
 
 const History = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -38,6 +39,8 @@ const History = () => {
         <h2 className="text-3xl font-black uppercase text-white mb-2">TRAINING GESCHIEDENIS</h2>
         <p className="font-bold text-white opacity-90">Al je voltooide trainingen op een rij</p>
       </BCard>
+
+      <WorkoutCalendar workouts={workouts} />
 
       {/* Stats Summary */}
       <div className="grid grid-cols-1 gap-4">

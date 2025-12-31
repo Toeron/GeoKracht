@@ -67,9 +67,7 @@ const Layout = ({ session }: { session: Session }) => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={toggleLanguage} className="bg-white border-4 border-black px-2 py-1 font-bold text-xs flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-1">
-            <Globe size={14} /> {language.toUpperCase()}
-          </button>
+          {/* Language Toggle Removed */}
           <button onClick={handleLogout} className="bg-red-500 text-white border-4 border-black p-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-1">
             <LogOut size={16} />
           </button>

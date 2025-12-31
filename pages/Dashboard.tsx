@@ -4,16 +4,17 @@ import { Calendar, Zap, TrendingUp } from 'lucide-react';
 import { isSameWeek, parseISO, differenceInCalendarWeeks } from 'date-fns';
 import { Session } from '@supabase/supabase-js';
 import { BCard } from '../components/ui/BrutalistComponents';
-import { getStoredWorkouts, formatDate, getProfile } from '../utils';
+import { getStoredWorkouts, formatDate, getProfile, calculateGamificationStats } from '../utils';
 import { Workout } from '../types';
 import { TRANSLATIONS } from '../constants';
+import PlayerCard from '../components/PlayerCard';
 
 const Dashboard = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [language, setLanguage] = useState<'nl' | 'en'>('nl');
   const { session } = useOutletContext<{ session: Session }>();
+  const [userName, setUserName] = useState<string>(session?.user?.user_metadata?.name || 'Athlete');
 
-  const userName = session?.user?.user_metadata?.name || 'Athlete';
   const t = TRANSLATIONS[language];
 
   useEffect(() => {
@@ -24,10 +25,11 @@ const Dashboard = () => {
       const p = await getProfile();
       if (p) {
         setLanguage(p.language as 'nl' | 'en');
+        if (p.name) setUserName(p.name);
       }
     };
     fetchData();
-  }, []);
+  }, [session]);
 
   const completedWorkouts = workouts.filter(w => w.completed);
 
@@ -73,15 +75,13 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Card */}
-      <BCard color="lime" className="relative overflow-hidden">
-        <h2 className="text-3xl font-black uppercase leading-none mb-4">
-          {t.welcome},<br />{userName}!
-        </h2>
-        <p className="font-bold text-sm max-w-[80%]">
-          Time to get stronger with the 5 core exercises.
-        </p>
-      </BCard>
+      {/* Welcome Header */}
+      <h2 className="font-black text-3xl uppercase tracking-tighter">
+        WELCOME {userName}
+      </h2>
+
+      {/* Gamification Player Card */}
+      <PlayerCard stats={calculateGamificationStats(workouts)} name={userName} />
 
       {/* Stats Grid - Responsive: 1 col mobile, 3 cols tablet */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

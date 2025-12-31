@@ -55,4 +55,12 @@ export interface User {
   language: 'nl' | 'en';
 }
 
-export type ThemeColor = 'lime' | 'pink' | 'orange' | 'cyan' | 'purple' | 'red' | 'green' | 'white';
+export interface GamificationStats {
+  level: number;
+  currentXP: number;
+  nextLevelXP: number;
+  rankName: string;
+  totalWorkouts: number;
+  progressPercent: number;
+}
+export type ThemeColor = 'lime' | 'pink' | 'orange' | 'cyan' | 'purple' | 'red' | 'green' | 'white' | 'black';

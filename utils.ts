@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import { nl, enUS } from 'date-fns/locale';
-import { Workout, WorkoutSnack, User, WorkoutTemplate } from './types';
+import { Workout, WorkoutSnack, User, WorkoutTemplate, GamificationStats } from './types';
 import { DEFAULT_TEMPLATES } from './constants';
 import { supabase } from './supabase';
 
@@ -213,4 +213,52 @@ export const generateId = () => Math.random().toString(36).substr(2, 9);
 
 export const calculateVolume = (sets: { weight: number, reps: number, completed: boolean }[]) => {
   return sets.reduce((acc, set) => set.completed ? acc + (set.weight * set.reps) : acc, 0);
+};
+
+export const calculateGamificationStats = (workouts: Workout[]): GamificationStats => {
+  const completedWorkouts = workouts.filter(w => w.completed);
+  let totalXP = 0;
+
+  // XP Calculation Rule:
+  // Base XP per workout: 150
+  // Volume XP: 1 XP per 100kg moved
+  completedWorkouts.forEach(w => {
+    totalXP += 150;
+    const vol = w.exercises.reduce((acc, ex) => acc + calculateVolume(ex.sets), 0);
+    totalXP += Math.floor(vol / 100);
+  });
+
+  // Leveling Rule:
+  // Level 1: 0-1000
+  // Level 2: 1001-2500 (+1500)
+  // Level 3: 2501-4500 (+2000)
+  // etc. Simplified: Level L requires 1000 * L base XP.
+
+  let level = 1;
+  let xpForNext = 1000;
+
+  // Simple iterative check to find current level
+  while (totalXP >= xpForNext) {
+    totalXP -= xpForNext;
+    level++;
+    xpForNext = Math.floor(1000 * Math.pow(1.2, level - 1)); // Curves up difficulty
+  }
+
+  // Ranks
+  const ranks = [
+    "Iron Rat", "Bronze Lifter", "Silver Athlete", "Gold Standard",
+    "Platinum Power", "Diamond Warlord", "Vibranium Legend"
+  ];
+  // Rank changes every 5 levels
+  const rankIndex = Math.min(Math.floor((level - 1) / 5), ranks.length - 1);
+  const rankName = ranks[rankIndex];
+
+  return {
+    level,
+    currentXP: totalXP,
+    nextLevelXP: xpForNext,
+    rankName,
+    totalWorkouts: completedWorkouts.length,
+    progressPercent: Math.min(100, (totalXP / xpForNext) * 100)
+  };
 };

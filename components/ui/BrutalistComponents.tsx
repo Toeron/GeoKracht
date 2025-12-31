@@ -18,11 +18,12 @@ export const BCard: React.FC<BCardProps> = ({ children, color = 'white', classNa
     purple: 'bg-purple-500',
     red: 'bg-red-500',
     green: 'bg-green-500',
-    white: 'bg-white'
+    white: 'bg-white',
+    black: 'bg-black'
   };
 
   return (
-    <div 
+    <div
       onClick={onClick}
       className={clsx(
         "border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-lg p-4 transition-all",
@@ -67,7 +68,7 @@ export const BButton: React.FC<BButtonProps> = ({ children, variant = 'primary',
 
 export const BInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
   return (
-    <input 
+    <input
       {...props}
       className={clsx(
         "border-4 border-black p-2 font-bold focus:outline-none focus:ring-4 focus:ring-cyan-400 w-full rounded-md",

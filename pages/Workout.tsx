@@ -69,6 +69,14 @@ const Workout = () => {
         // Small delay to let the user see "GO" or "0"
         const timeout = setTimeout(() => {
           setRestTimer(null);
+          // Auto-advance if we just finished an exercise
+          if (activeWorkout) {
+            const currentEx = activeWorkout.exercises[activeExerciseIndex];
+            const isExerciseComplete = currentEx.sets.every(s => s.completed);
+            if (isExerciseComplete && activeExerciseIndex < activeWorkout.exercises.length - 1) {
+              setActiveExerciseIndex(prev => prev + 1);
+            }
+          }
         }, 500);
         return () => clearTimeout(timeout);
       }
@@ -177,7 +185,7 @@ const Workout = () => {
     const finishedWorkout = {
       ...activeWorkout,
       completed: true,
-      duration_minutes: Math.floor(elapsed / 60)
+      duration_minutes: startTime ? Math.floor((new Date().getTime() - startTime.getTime()) / 60000) : Math.floor(elapsed / 60)
     };
     await saveWorkout(finishedWorkout);
     navigate('/history');
